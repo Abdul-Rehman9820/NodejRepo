@@ -8,7 +8,7 @@ app.use(cors());
 
 // MongoDB connection setup (replace with your MongoDB URI)
 const { MongoClient } = require('mongodb');
-const uri = 'mongodb://localhost:27017/abdulmongo'; // Your MongoDB URI
+const uri = 'mongodb+srv://abdullahansari982076:T5OWrAXa9G3iW4HJ@cluster0.3u1vs8k.mongodb.net/abdulclouddb';
 
 const client = new MongoClient(uri, { useUnifiedTopology: true });
 
@@ -28,11 +28,12 @@ connectToDatabase();
 // Create a new item
 app.post('/api/items', async (req, res) => {
     const item = req.body;
-    const collection = client.db('abdulmongo').collection('user'); // Replace 'mydb' with your database name
+    const collection = client.db('abdulclouddb').collection('user'); // Replace 'mydb' with your database name
   
     try {
       const result = await collection.insertOne(item);
-      res.status(201).json(result.ops[0]);
+      res.status(201).json({'messege':'inserted successfully'});
+      
     } catch (error) {
       console.error('Error creating item:', error);
       res.status(500).json({ error: 'Internal server error' });
@@ -41,7 +42,7 @@ app.post('/api/items', async (req, res) => {
   
   // Read all items
   app.get('/api/items', async (req, res) => {
-    const collection = client.db('abdulmongo').collection('user');
+    const collection = client.db('abdulclouddb').collection('user');
   
     try {
       const items = await collection.find({}).toArray();
@@ -61,7 +62,7 @@ app.post('/api/items', async (req, res) => {
   // Read a specific item by ID
   app.get('/api/items/:id', async (req, res) => {
     const id = req.params.id;
-    const collection = client.db('abdulmongo').collection('user');
+    const collection = client.db('abdulclouddb').collection('user');
   
     try {
       const item = await collection.findOne({ _id: new mongodb.ObjectID(id) });
@@ -79,7 +80,7 @@ app.post('/api/items', async (req, res) => {
   app.put('/api/items/:id', async (req, res) => {
     const id = req.params.id;
     const updatedItem = req.body;
-    const collection = client.db('mydb').collection('items');
+    const collection = client.db('abdulclouddb').collection('user');
   
     try {
       const result = await collection.updateOne(
@@ -101,7 +102,7 @@ app.post('/api/items', async (req, res) => {
   // Delete an item by ID
   app.delete('/api/items/:id', async (req, res) => {
     const id = req.params.id;
-    const collection = client.db('mydb').collection('items');
+    const collection = client.db('abdulclouddb').collection('user');
   
     try {
       const result = await collection.deleteOne({ _id: new mongodb.ObjectID(id) });
@@ -110,7 +111,7 @@ app.post('/api/items', async (req, res) => {
         return res.status(404).json({ error: 'Item not found' });
       }
   
-      res.status(204).send();
+        res.status(201).json({'messege':'inserted successfully'});
     } catch (error) {
       console.error('Error deleting item:', error);
       res.status(500).json({ error: 'Internal server error' });
